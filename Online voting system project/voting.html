@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting - Online Voting System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Vote for Your Favorite Party</h1>
+        <div id="votingSection">
+            <form id="votingForm" onsubmit="submitVote(event)">
+                <div class="form-group voting-option">
+                    <input type="radio" id="option1" name="vote" value="Option 1" required>
+                    <label for="option1">
+                        <img src="images/ysrcplogo.png" alt="Party 1 Logo" style="width: 50px; height: auto; vertical-align: middle;">
+                        YSRCP
+                    </label>
+                </div>
+                <div class="form-group voting-option">
+                    <input type="radio" id="option2" name="vote" value="Option 2">
+                    <label for="option2">
+                        <img src="images/bjplogo.png" alt="Party 2 Logo" style="width: 50px; height: auto; vertical-align: middle;">
+                        BJP
+                    </label>
+                </div>
+                <div class="form-group voting-option">
+                    <input type="radio" id="option3" name="vote" value="Option 3">
+                    <label for="option3">
+                        <img src="images/tdplogo.png" alt="Party 3 Logo" style="width: 50px; height: auto; vertical-align: middle;">
+                        TDP
+                    </label>
+                </div>
+                <div class="form-group voting-option">
+                    <input type="radio" id="option3" name="vote" value="Option 3">
+                    <label for="option3">
+                        <img src="images/jsplogo.png" alt="Party 3 Logo" style="width: 50px; height: auto; vertical-align: middle;">
+                        JSP
+                    </label>
+                </div>
+                <button type="submit">Submit Vote</button>
+            </form>
+        </div>
+        <div id="alreadyVotedMessage" style="display: none;">
+            <p>You have already voted. Thank you for your participation!</p>
+            <button onclick="window.location.href='results.html'">See Results</button>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('userData'));
+
+        // Check if the user has already voted based on their unique credentials
+        const hasVotedKey = `hasVoted_${userData.username}_${userData.email}_${userData.voterId}`;
+        if (localStorage.getItem(hasVotedKey)) {
+            document.getElementById('votingSection').style.display = 'none';
+            document.getElementById('alreadyVotedMessage').style.display = 'block';
+        }
+
+        function submitVote(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the selected option
+            const selectedOption = document.querySelector('input[name="vote"]:checked');
+            if (selectedOption) {
+                // Update the vote count in localStorage
+                const vote = selectedOption.value;
+
+                // Retrieve current votes from localStorage or initialize them
+                const currentVotes = JSON.parse(localStorage.getItem('votes')) || {
+                    "Option 1": 0,
+                    "Option 2": 0,
+                    "Option 3": 0
+                };
+
+                // Increment the vote count for the selected option
+                currentVotes[vote]++;
+                localStorage.setItem('votes', JSON.stringify(currentVotes)); // Save updated votes
+
+                // Mark that the user has voted using their unique key
+                localStorage.setItem(hasVotedKey, 'true');
+
+                // Redirect to the results page
+                window.location.href = 'results.html';
+            }
+        }
+    </script>
+</body>
+</html>

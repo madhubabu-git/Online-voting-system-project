@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Online Voting System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="voterId">Voter ID:</label>
+                <input type="text" id="voterId" name="voterId" required>
+            </div>
+            <div class="form-group">
+                <label for="username">First Name:</label>
+                <input type="text" id="firstname" name="firstname" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Last Name:</label>
+                <input type="text" id="lastname" name="lasttname" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <div id="error-message" style="color: red; display: none;"></div>
+            <button type="submit">Register</button>
+            <button type="button" onclick="cancelRegistration()">Cancel</button>
+        </form>
+        <p class="login-text">Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script>
+        function cancelRegistration() {
+            // Redirect to the home page or any other page
+            window.location.href = 'index.html'; // Change this to your desired page
+        }
+
+        function validateForm() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (password !== confirmPassword) {
+                errorMessage.innerText = "Passwords do not match.";
+                errorMessage.style.display = "block";
+                return false; // Prevent form submission
+            }
+
+            errorMessage.style.display = "none"; // Hide error message if passwords match
+
+            // Store user data in localStorage
+            const voterId = document.getElementById('voterId').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+
+            const userData = {
+                voterId: voterId,
+                username: username,
+                email: email,
+                password: password
+            };
+
+            localStorage.setItem('userData', JSON.stringify(userData)); // Store user data
+            alert("Registration successful!"); // Optional: Show a success message
+            window.location.href = 'login.html'; // Redirect to the login page
+            return false; // Prevent form submission for demonstration purposes
+        }
+    </script>
+</body>
+</html>

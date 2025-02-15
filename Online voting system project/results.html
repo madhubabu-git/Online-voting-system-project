@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Online Voting System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Voting Results</h1>
+        <div class="results">
+            <div class="result-item">
+                <h2>YSRCP</h2>
+                <p>Votes: <span id="votes-option1">0</span></p>
+            </div>
+            <div class="result-item">
+                <h2>BJP</h2>
+                <p>Votes: <span id="votes-option2">0</span></p>
+            </div>
+            <div class="result-item">
+                <h2>TDP</h2>
+                <p>Votes: <span id="votes-option3">0</span></p>
+            </div>
+            <div class="result-item">
+                <h2>JSP</h2>
+                <p>Votes: <span id="votes-option3">0</span></p>
+            </div>
+        </div>
+        <button onclick="window.location.href='voting.html'">Vote Again</button>
+        <button onclick="window.location.href='index.html'">Home</button>
+    </div>
+
+    <script>
+        // Retrieve the votes from localStorage
+        const votes = JSON.parse(localStorage.getItem('votes')) || {
+            "Option 1": 0,
+            "Option 2": 0,
+            "Option 3": 0
+        };
+
+        // Display the results
+        document.getElementById('votes-option1').innerText = votes["Option 1"];
+        document.getElementById('votes-option2').innerText = votes["Option 2"];
+        document.getElementById('votes-option3').innerText = votes["Option 3"];
+    </script>
+</body>
+</html>
